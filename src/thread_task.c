@@ -469,7 +469,7 @@ static inline void delayed_fg_task(const Dav1dContext *const c,
 }
 
 void *dav1d_worker_task(void *data) {
-    RecordReplayPrint("dav1d_worker_task start");
+    RecordReplayAssert("dav1d_worker_task start");
     Dav1dTaskContext *const tc = data;
     const Dav1dContext *const c = tc->c;
     struct TaskThreadData *const ttd = tc->task_thread.ttd;
