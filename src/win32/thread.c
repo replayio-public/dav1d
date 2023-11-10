@@ -26,6 +26,7 @@
  */
 
 #include "config.h"
+#include "replay.h"
 
 #if defined(_WIN32)
 
@@ -55,6 +56,7 @@ COLD void dav1d_set_thread_name(const wchar_t *const name) {
 }
 
 static COLD unsigned __stdcall thread_entrypoint(void *const data) {
+    RecordReplayAssert("thread_entrypoint");
     pthread_t *const t = data;
     t->arg = t->func(t->arg);
     return 0;
@@ -64,6 +66,7 @@ COLD int dav1d_pthread_create(pthread_t *const thread,
                               const pthread_attr_t *const attr,
                               void *(*const func)(void*), void *const arg)
 {
+    RecordReplayAssert("dav1d_pthread_create");
     const unsigned stack_size = attr ? attr->stack_size : 0;
     thread->func = func;
     thread->arg = arg;
