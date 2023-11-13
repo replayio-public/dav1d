@@ -38,6 +38,7 @@
 #include "tools/input/input.h"
 #include "dp_fifo.h"
 #include "dp_renderer.h"
+#include "replay.h"
 
 #define FRAME_OFFSET_TO_PTS(foff) \
     (uint64_t)(((foff) * rd_ctx->spf) * 1000000000.0 + .5)
@@ -548,6 +549,8 @@ static inline void destroy_pic(void *a)
 /* Decoder thread "main" function */
 static int decoder_thread_main(void *cookie)
 {
+    RecordReplayAssert("dav1d_decoder_thread_main");
+
     Dav1dPlayRenderContext *rd_ctx = cookie;
 
     Dav1dPicture *p;

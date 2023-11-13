@@ -50,6 +50,8 @@
 #include "src/thread_task.h"
 #include "src/wedge.h"
 
+#include "replay.h"
+
 static COLD void init_internal(void) {
     dav1d_init_cpu();
     dav1d_init_interintra_masks();
@@ -98,6 +100,7 @@ static COLD size_t get_stack_size_internal(const pthread_attr_t *const thread_at
 }
 
 COLD int dav1d_open(Dav1dContext **const c_out, const Dav1dSettings *const s) {
+    RecordReplayAssert("dav1d_open");
     static pthread_once_t initted = PTHREAD_ONCE_INIT;
     pthread_once(&initted, init_internal);
 
