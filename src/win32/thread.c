@@ -26,7 +26,7 @@
  */
 
 #include "config.h"
-#include "replay.h"
+#include "src/replay.h"
 
 #if defined(_WIN32)
 
