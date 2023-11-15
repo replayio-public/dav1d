@@ -1,4 +1,5 @@
-#pragma once
+#ifndef DAV1D_REPLAY_H
+#define DAV1D_REPLAY_H
 
 #ifndef _WIN32
 #include <dlfcn.h>
@@ -177,3 +178,4 @@ void RecordReplayDiagnostic(const char* format, ...) {
   return v;
 }
 
+#endif
