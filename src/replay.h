@@ -13,19 +13,19 @@
 // ##########################################################################
 // Driver/Linker API
 // ##########################################################################
-void RecordReplayPrint(const char* format, ...);
-extern void RecordReplayWarning(const char* format, ...);
-extern void RecordReplayAssert(const char* format, ...);
-extern void RecordReplayDiagnostic(const char* format, ...);
-extern void RecordReplayRegisterPointer(const void* ptr);
-extern void RecordReplayUnregisterPointer(const void* ptr);
-extern bool RecordReplayFeatureEnabled(const char* feature, const char* subfeature);
-extern bool RecordReplayIsRecordingOrReplaying(const char* feature, const char* subfeature);
-extern bool RecordReplayAreEventsDisallowed(const char* why);
-extern void RecordReplayBeginPassThroughEvents();
-extern void RecordReplayEndPassThroughEvents();
-extern bool RecordReplayIsReplaying(void);
-extern unsigned long RecordReplayValue(const char* why, unsigned long v);
+// static void RecordReplayPrint(const char* format, ...);
+// static void RecordReplayWarning(const char* format, ...);
+static void RecordReplayAssert(const char* format, ...);
+// static void RecordReplayDiagnostic(const char* format, ...);
+// static void RecordReplayRegisterPointer(const void* ptr);
+// static void RecordReplayUnregisterPointer(const void* ptr);
+// static bool RecordReplayFeatureEnabled(const char* feature, const char* subfeature);
+// static bool RecordReplayIsRecordingOrReplaying(const char* feature, const char* subfeature);
+// static bool RecordReplayAreEventsDisallowed(const char* why);
+// static void RecordReplayBeginPassThroughEvents();
+// static void RecordReplayEndPassThroughEvents();
+// static bool RecordReplayIsReplaying(void);
+// static unsigned long RecordReplayValue(const char* why, unsigned long v);
 
 
 static char gRecordingOrReplaying;
@@ -83,25 +83,25 @@ static inline char EnsureInitialized() {
   return !!gRecordReplayAssert;
 }
 
-void RecordReplayPrint(const char* format, ...) {
-  if (RecordReplayIsRecordingOrReplaying(0, 0)) {
-    va_list args;
-    va_start(args, format);
-    gRecordReplayPrint(format, args);
-    va_end(args);
-  }
-}
+// static void RecordReplayPrint(const char* format, ...) {
+//   if (RecordReplayIsRecordingOrReplaying(0, 0)) {
+//     va_list args;
+//     va_start(args, format);
+//     gRecordReplayPrint(format, args);
+//     va_end(args);
+//   }
+// }
 
-void RecordReplayWarning(const char* format, ...) {
-  if (EnsureInitialized()) {
-    va_list ap;
-    va_start(ap, format);
-    gRecordReplayWarning(format, ap);
-    va_end(ap);
-  }
-}
+// static void RecordReplayWarning(const char* format, ...) {
+//   if (EnsureInitialized()) {
+//     va_list ap;
+//     va_start(ap, format);
+//     gRecordReplayWarning(format, ap);
+//     va_end(ap);
+//   }
+// }
 
-void RecordReplayAssert(const char* format, ...) {
+static void RecordReplayAssert(const char* format, ...) {
   if (EnsureInitialized()) {
     va_list ap;
     va_start(ap, format);
@@ -110,72 +110,72 @@ void RecordReplayAssert(const char* format, ...) {
   }
 }
 
-void RecordReplayDiagnostic(const char* format, ...) {
-  if (EnsureInitialized()) {
-    va_list ap;
-    va_start(ap, format);
-    gRecordReplayDiagnostic(format, ap);
-    va_end(ap);
-  }
-}
+// static void RecordReplayDiagnostic(const char* format, ...) {
+//   if (EnsureInitialized()) {
+//     va_list ap;
+//     va_start(ap, format);
+//     gRecordReplayDiagnostic(format, ap);
+//     va_end(ap);
+//   }
+// }
 
- void RecordReplayRegisterPointer(const void* ptr) {
-  if (EnsureInitialized()) {
-    gRecordReplayRegisterPointer(ptr);
-  }
-}
+// static void RecordReplayRegisterPointer(const void* ptr) {
+//   if (EnsureInitialized()) {
+//     gRecordReplayRegisterPointer(ptr);
+//   }
+// }
 
- void RecordReplayUnregisterPointer(const void* ptr) {
-  if (EnsureInitialized()) {
-    gRecordReplayUnregisterPointer(ptr);
-  }
-}
+// static void RecordReplayUnregisterPointer(const void* ptr) {
+//   if (EnsureInitialized()) {
+//     gRecordReplayUnregisterPointer(ptr);
+//   }
+// }
 
- bool RecordReplayFeatureEnabled(const char* feature, const char* subfeature) {
-  if (EnsureInitialized()) {
-    if (!gHasDisabledFeatures) {
-        return true;
-    }
-    return gRecordReplayFeatureEnabled(feature, subfeature);
-  }
-  return true;
-}
+// static bool RecordReplayFeatureEnabled(const char* feature, const char* subfeature) {
+//   if (EnsureInitialized()) {
+//     if (!gHasDisabledFeatures) {
+//         return true;
+//     }
+//     return gRecordReplayFeatureEnabled(feature, subfeature);
+//   }
+//   return true;
+// }
 
- bool RecordReplayIsRecordingOrReplaying(const char* feature, const char* subfeature) {
-  return EnsureInitialized() && gRecordingOrReplaying &&
-    (!feature || RecordReplayFeatureEnabled(feature, subfeature));
-}
+// static bool RecordReplayIsRecordingOrReplaying(const char* feature, const char* subfeature) {
+//   return EnsureInitialized() && gRecordingOrReplaying &&
+//     (!feature || RecordReplayFeatureEnabled(feature, subfeature));
+// }
 
- bool RecordReplayAreEventsDisallowed(const char* why) {
-  if (EnsureInitialized()) {
-    if (RecordReplayIsRecordingOrReplaying("disallow-events", why)) {
-      return gRecordReplayAreEventsDisallowed();
-    }
-  }
-  return false;
-}
+// static bool RecordReplayAreEventsDisallowed(const char* why) {
+//   if (EnsureInitialized()) {
+//     if (RecordReplayIsRecordingOrReplaying("disallow-events", why)) {
+//       return gRecordReplayAreEventsDisallowed();
+//     }
+//   }
+//   return false;
+// }
 
- void RecordReplayBeginPassThroughEvents() {
-  if (EnsureInitialized()) {
-    gRecordReplayBeginPassThroughEvents();
-  }
-}
+// static void RecordReplayBeginPassThroughEvents() {
+//   if (EnsureInitialized()) {
+//     gRecordReplayBeginPassThroughEvents();
+//   }
+// }
 
- void RecordReplayEndPassThroughEvents() {
-  if (EnsureInitialized()) {
-    gRecordReplayEndPassThroughEvents();
-  }
-}
+// static void RecordReplayEndPassThroughEvents() {
+//   if (EnsureInitialized()) {
+//     gRecordReplayEndPassThroughEvents();
+//   }
+// }
 
- bool RecordReplayIsReplaying(void) {
-  return EnsureInitialized() && gRecordReplayIsReplaying();
-}
+// static bool RecordReplayIsReplaying(void) {
+//   return EnsureInitialized() && gRecordReplayIsReplaying();
+// }
 
- unsigned long RecordReplayValue(const char* why, unsigned long v) {
-  if (RecordReplayIsRecordingOrReplaying("values", why)) {
-    return gRecordReplayValue(why, v);
-  }
-  return v;
-}
+// static unsigned long RecordReplayValue(const char* why, unsigned long v) {
+//   if (RecordReplayIsRecordingOrReplaying("values", why)) {
+//     return gRecordReplayValue(why, v);
+//   }
+//   return v;
+// }
 
 #endif
